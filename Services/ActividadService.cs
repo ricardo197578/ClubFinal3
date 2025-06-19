@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Models;
 
-namespace ClubMinimal.Services
+namespace ClubDeportivo.Services
 {
     public class ActividadService : IActividadService
     {

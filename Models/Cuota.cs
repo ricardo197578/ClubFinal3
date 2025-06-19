@@ -1,6 +1,6 @@
 using System;
 
-namespace ClubMinimal.Models
+namespace ClubDeportivo.Models
 {
     public class Cuota
     {
@@ -13,7 +13,7 @@ namespace ClubMinimal.Models
         public MetodoPago Metodo { get; set; }
         public string Periodo { get; set; } 
 
-        // Constructor para facilitar la creación
+        
         public Cuota() { }
 
         public Cuota(int id, int socioId, decimal monto, DateTime fechaPago,

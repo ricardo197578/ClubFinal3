@@ -1,10 +1,10 @@
 using System;
 using System.Windows.Forms;
-using ClubMinimal.Models;
-using ClubMinimal.Services;
-using ClubMinimal.Interfaces;
+using ClubDeportivo.Models;
+using ClubDeportivo.Services;
+using ClubDeportivo.Interfaces;
 
-namespace ClubMinimal.Views.Forms
+namespace ClubDeportivo.Views.Forms
 {
     public class PagoActividadForm : Form
     {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Models;
 
-namespace ClubMinimal.Services
+namespace ClubDeportivo.Services
 {
     public class CuotaService : ICuotaService
     {

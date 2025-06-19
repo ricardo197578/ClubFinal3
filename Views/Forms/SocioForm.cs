@@ -1,11 +1,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ClubMinimal.Models;
-using ClubMinimal.Repositories;
-using ClubMinimal.Services;
+using ClubDeportivo.Models;
+using ClubDeportivo.Repositories;
+using ClubDeportivo.Services;
 
-namespace ClubMinimal.Views.Forms
+namespace ClubDeportivo.Views.Forms
 {
     public class SocioForm : Form
     {

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Models;
-using ClubMinimal.Repositories;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Models;
+using ClubDeportivo.Repositories;
 
-namespace ClubMinimal.Services
+namespace ClubDeportivo.Services
 {
     public class CarnetService : ICarnetService
     {

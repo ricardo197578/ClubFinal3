@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
 
-namespace ClubMinimal
+namespace ClubDeportivo
 {
     public class DatabaseHelper : IDisposable
     {

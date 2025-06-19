@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Models;
 using System.Linq;
 
-namespace ClubMinimal.Repositories
+namespace ClubDeportivo.Repositories
 {
     public class NoSocioRepository : INoSocioRepository
     {

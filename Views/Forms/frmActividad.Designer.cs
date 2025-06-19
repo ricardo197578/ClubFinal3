@@ -1,9 +1,9 @@
 using System;
 using System.Windows.Forms;
-using ClubMinimal.Models;
-using ClubMinimal.Repositories;
+using ClubDeportivo.Models;
+using ClubDeportivo.Repositories;
 
-namespace ClubMinimal.Views.Forms
+namespace ClubDeportivo.Views.Forms
     {
         partial class frmActividad
         {

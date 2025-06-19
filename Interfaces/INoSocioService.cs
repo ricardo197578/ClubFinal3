@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ClubMinimal.Models;
+using ClubDeportivo.Models;
 
-namespace ClubMinimal.Interfaces
+namespace ClubDeportivo.Interfaces
 {
     public interface INoSocioService
     {

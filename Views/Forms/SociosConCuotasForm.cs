@@ -1,12 +1,12 @@
 using System;
 using System.Windows.Forms;
-using ClubMinimal.Services;
+using ClubDeportivo.Services;
 using System.Collections.Generic;
-using ClubMinimal.Models;
-using ClubMinimal.Interfaces;
+using ClubDeportivo.Models;
+using ClubDeportivo.Interfaces;
 using System.Drawing;
 
-namespace ClubMinimal.Views.Forms
+namespace ClubDeportivo.Views.Forms
 {
     public class SociosConCuotasForm : Form
     {

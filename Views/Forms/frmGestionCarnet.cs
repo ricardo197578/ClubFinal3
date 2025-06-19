@@ -1,10 +1,10 @@
 using System;
 using System.Windows.Forms;
-using ClubMinimal.Services;
-using ClubMinimal.Models;
-using ClubMinimal.Interfaces;
+using ClubDeportivo.Services;
+using ClubDeportivo.Models;
+using ClubDeportivo.Interfaces;
 
-namespace ClubMinimal.Views.Forms
+namespace ClubDeportivo.Views.Forms
 {
     public partial class frmGestionCarnet : Form
     {

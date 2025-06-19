@@ -1,6 +1,6 @@
 using System;
 
-namespace ClubMinimal.Models
+namespace ClubDeportivo.Models
 {
     public class Actividad
     {

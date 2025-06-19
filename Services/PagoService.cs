@@ -1,8 +1,8 @@
 using System;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Models;
 
-namespace ClubMinimal.Services
+namespace ClubDeportivo.Services
 {
     public class PagoService : IPagoService
     {

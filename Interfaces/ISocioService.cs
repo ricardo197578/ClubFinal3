@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ClubMinimal.Models;
+using ClubDeportivo.Models;
 
-namespace ClubMinimal.Interfaces
+namespace ClubDeportivo.Interfaces
 {
     //Es una interface, por lo que solo declara métodos sin implementarlos
     public interface ISocioService

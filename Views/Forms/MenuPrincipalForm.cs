@@ -1,12 +1,12 @@
 using System;
 using System.Windows.Forms;
-using ClubMinimal.Services;
-using ClubMinimal.Repositories;
-using ClubMinimal.Models;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Views.Forms;
+using ClubDeportivo.Services;
+using ClubDeportivo.Repositories;
+using ClubDeportivo.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Views.Forms;
 
-namespace ClubMinimal.Views.Forms
+namespace ClubDeportivo.Views.Forms
 {
     public class MenuPrincipalForm : Form
     {

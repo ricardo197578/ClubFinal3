@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using ClubMinimal.Models;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Services;
+using ClubDeportivo.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Services;
 
-namespace ClubMinimal.Services
+namespace ClubDeportivo.Services
 {
     public interface IActividadService
     {

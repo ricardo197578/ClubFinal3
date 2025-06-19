@@ -1,10 +1,10 @@
 using System;
 using System.Windows.Forms;
-using ClubMinimal.Repositories;
-using ClubMinimal.Services;
-using ClubMinimal.Views.Forms;
+using ClubDeportivo.Repositories;
+using ClubDeportivo.Services;
+using ClubDeportivo.Views.Forms;
 
-namespace ClubMinimal
+namespace ClubDeportivo
 {
     static class Program
     {

@@ -1,8 +1,8 @@
 using System;
-using ClubMinimal.Models;
+using ClubDeportivo.Models;
 using System.Collections.Generic;
 
-namespace ClubMinimal.Interfaces
+namespace ClubDeportivo.Interfaces
 {
     public interface ICuotaService
     {

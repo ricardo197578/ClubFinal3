@@ -1,8 +1,8 @@
 using System.Data.SQLite;
-using ClubMinimal.Interfaces;
-using ClubMinimal.Models;
+using ClubDeportivo.Interfaces;
+using ClubDeportivo.Models;
 
-namespace ClubMinimal.Repositories
+namespace ClubDeportivo.Repositories
 {
     public class PagoRepository : IPagoRepository
     {
