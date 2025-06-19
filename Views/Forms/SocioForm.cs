@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using ClubMinimal.Models;
 using ClubMinimal.Repositories;
@@ -20,13 +18,12 @@ namespace ClubMinimal.Views.Forms
         private readonly DateTimePicker dtpFechaVencimiento;
         private readonly CheckBox chkEstadoActivo;
         private readonly ComboBox cmbTipoSocio;
-        private readonly ListBox listBox;
 
         public SocioForm()
         {
             this.Text = "Gestión de Socios";
-            this.Width = 600;
-            this.Height = 600;
+            this.Width = 450; 
+            this.Height = 450; 
             this.StartPosition = FormStartPosition.CenterScreen;
 
             var dbHelper = new DatabaseHelper();
@@ -43,7 +40,6 @@ namespace ClubMinimal.Views.Forms
             dtpFechaVencimiento = new DateTimePicker();
             chkEstadoActivo = new CheckBox();
             cmbTipoSocio = new ComboBox();
-            listBox = new ListBox();
 
             InitializeComponents();
         }
@@ -52,11 +48,10 @@ namespace ClubMinimal.Views.Forms
         {
             int top = 20;
             int spacing = 35;
-            int labelWidth = 150;
-            int inputLeft = labelWidth + 30;
+            int labelWidth = 120; 
+            int inputLeft = labelWidth + 20; 
             int inputWidth = 250;
 
-            // Controles de entrada
             txtNombre.SetBounds(inputLeft, top, inputWidth, 20);
             txtApellido.SetBounds(inputLeft, top + spacing, inputWidth, 20);
             txtDni.SetBounds(inputLeft, top + spacing * 2, inputWidth, 20);
@@ -76,39 +71,32 @@ namespace ClubMinimal.Views.Forms
             cmbTipoSocio.Items.AddRange(Enum.GetNames(typeof(TipoSocio)));
             cmbTipoSocio.SelectedIndex = 0;
 
-            listBox.SetBounds(20, top + spacing * 9, this.Width - 40, 200);
-
-            // Etiquetas
             this.Controls.Add(CreateLabel("Nombre:", top));
             this.Controls.Add(CreateLabel("Apellido:", top + spacing));
             this.Controls.Add(CreateLabel("DNI:", top + spacing * 2));
             this.Controls.Add(CreateLabel("Fecha Inscripción:", top + spacing * 3));
-            this.Controls.Add(CreateLabel("Vencimiento Primera Cuota:", top + spacing * 4));
+            this.Controls.Add(CreateLabel("Vencimiento:", top + spacing * 4));
             this.Controls.Add(CreateLabel("Tipo de Socio:", top + spacing * 6));
 
-            // Botones
             var btnGuardar = new Button { Text = "Guardar Socio" };
-            btnGuardar.SetBounds(20, top + spacing * 7, 120, 30);
+            var btnSalir = new Button { Text = "Salir" };
+
+            // Centrar los botones
+            int buttonWidth = 120;
+            int totalButtonsWidth = buttonWidth * 2 + 20; // 20 es el espacio entre botones
+            int leftPosition = (this.ClientSize.Width - totalButtonsWidth) / 2;
+
+            btnGuardar.SetBounds(leftPosition, top + spacing * 7, buttonWidth, 30);
             btnGuardar.Click += btnGuardar_Click;
 
-            var btnListar = new Button { Text = "Ver Todos" };
-            btnListar.SetBounds(160, top + spacing * 7, 120, 30);
-            btnListar.Click += btnListar_Click;
+            btnSalir.SetBounds(leftPosition + buttonWidth + 20, top + spacing * 7, buttonWidth, 30);
+            btnSalir.Click += (sender, e) => this.Close();
 
-            var btnSociosVencidos = new Button { Text = "Socios Vencidos", BackColor = Color.LightCoral };
-            btnSociosVencidos.SetBounds(300, top + spacing * 7, 120, 30);
-            btnSociosVencidos.Click += BtnSociosVencidos_Click;
-
-            var btnSociosCuotas = new Button { Text = "Gestión Cuotas", BackColor = Color.LightGreen };
-            btnSociosCuotas.SetBounds(440, top + spacing * 7, 120, 30);
-            btnSociosCuotas.Click += BtnSociosCuotas_Click;
-
-            // Agregar controles
             this.Controls.AddRange(new Control[] {
                 txtNombre, txtApellido, txtDni,
                 dtpFechaInscripcion, dtpFechaVencimiento,
-                chkEstadoActivo, cmbTipoSocio, listBox,
-                btnGuardar, btnListar, btnSociosVencidos, btnSociosCuotas
+                chkEstadoActivo, cmbTipoSocio, 
+                btnGuardar, btnSalir
             });
         }
 
@@ -119,7 +107,7 @@ namespace ClubMinimal.Views.Forms
                 Text = text,
                 Left = 20,
                 Top = top,
-                Width = 150,
+                Width = 120, 
                 TextAlign = ContentAlignment.MiddleRight
             };
         }
@@ -159,40 +147,6 @@ namespace ClubMinimal.Views.Forms
             else
             {
                 MessageBox.Show("Por favor complete todos los campos obligatorios (Nombre, Apellido y DNI)");
-            }
-        }
-
-        private void btnListar_Click(object sender, EventArgs e)
-        {
-            CargarSocios(_socioService.ObtenerSocios());
-        }
-
-        private void BtnSociosVencidos_Click(object sender, EventArgs e)
-        {
-            var sociosVencidos = _cuotaService.ObtenerSociosConCuotasVencidas(DateTime.Today);
-            CargarSocios(sociosVencidos);
-        }
-
-        private void BtnSociosCuotas_Click(object sender, EventArgs e)
-        {
-            var formCuotas = new SociosConCuotasForm(_cuotaService);
-            formCuotas.ShowDialog();
-        }
-
-        private void CargarSocios(IEnumerable<Socio> socios)
-        {
-            listBox.Items.Clear();
-            foreach (var socio in socios.OrderBy(s => s.Apellido).ThenBy(s => s.Nombre))
-            {
-                string estadoCuota = socio.FechaVencimientoCuota < DateTime.Today ? "VENCIDO" : "AL DÍA";
-                string texto = string.Format("{0}, {1} - DNI: {2} | Vence: {3} ({4})",
-                    socio.Apellido,
-                    socio.Nombre,
-                    socio.Dni,
-                    socio.FechaVencimientoCuota.ToString("dd/MM/yyyy"),
-                    estadoCuota);
-
-                listBox.Items.Add(texto);
             }
         }
 

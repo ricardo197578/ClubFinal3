@@ -3,36 +3,39 @@ using System.Windows.Forms;
 using ClubMinimal.Services;
 using ClubMinimal.Repositories;
 using ClubMinimal.Models;
+using System.Drawing;
+
 
 namespace ClubMinimal.Views.Forms
 {
-
     public class NoSocioForm : Form
     {
         private readonly NoSocioService _noSocioService;
         private readonly TextBox txtNombre;
         private readonly TextBox txtApellido;
-        private readonly TextBox txtDni;//para dni
-        private readonly ListBox listBox;
+        private readonly TextBox txtDni;
+        private readonly DataGridView dataGridView;
 
         public NoSocioForm()
         {
             // Configuración inicial del formulario
             this.Text = "Gestión de No Socios";
-            this.Width = 450;
-            this.Height = 450;
+            this.Width = 650;  
+            this.Height = 500;
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
 
             // Inicialización de dependencias
             var dbHelper = new DatabaseHelper();
             var repo = new NoSocioRepository(dbHelper);
             _noSocioService = new NoSocioService(repo);
 
-            // Inicializacion
+            // Inicialización de controles
             txtNombre = new TextBox();
             txtApellido = new TextBox();
-            txtDni = new TextBox();//nuevo
-            listBox = new ListBox();
+            txtDni = new TextBox();
+            dataGridView = new DataGridView();
 
             // Crear controles
             InitializeComponents();
@@ -40,87 +43,131 @@ namespace ClubMinimal.Views.Forms
 
         private void InitializeComponents()
         {
-            // Configuración de los controles ya inicializados
-            txtNombre.Left = 120;
-            txtNombre.Top = 20;
-            txtNombre.Width = 300;
+            // Configuración de los controles de entrada
+            txtNombre.Location = new Point(120, 20);
+            txtNombre.Size = new Size(300, 20);
 
-            txtApellido.Left = 120;
-            txtApellido.Top = 60;
-            txtApellido.Width = 300;
+            txtApellido.Location = new Point(120, 60);
+            txtApellido.Size = new Size(300, 20);
 
-            txtDni.Left = 120;
-            txtDni.Top = 100;
-            txtDni.Width = 300;
+            txtDni.Location = new Point(120, 100);
+            txtDni.Size = new Size(300, 20);
 
-            listBox.Left = 20;
-            listBox.Top = 250;
-            listBox.Width = 400;
-            listBox.Height = 200;
-            listBox.Font = new System.Drawing.Font("Consolas", 9.75f);
+            // Configuración del DataGridView
+            dataGridView.Location = new Point(20, 200);
+            dataGridView.Size = new Size(600, 250);
+            dataGridView.Font = new Font("Microsoft Sans Serif", 9);
+            dataGridView.ReadOnly = true;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView.RowHeadersVisible = false;
+            dataGridView.ScrollBars = ScrollBars.Vertical;
 
-            // Controles para Nombre
+            // Configurar columnas del DataGridView
+            ConfigurarColumnasDataGrid();
+
+            // Etiquetas
             var lblNombre = new Label
             {
                 Text = "Nombre:",
-                Left = 20,
-                Top = 20,
-                Width = 80
+                Location = new Point(20, 20),
+                Size = new Size(80, 20)
             };
 
-            // Controles para Apellido
             var lblApellido = new Label
             {
                 Text = "Apellido:",
-                Left = 20,
-                Top = 60,
-                Width = 80
+                Location = new Point(20, 60),
+                Size = new Size(80, 20)
             };
 
-            //nuevo para Dni
             var lblDni = new Label
             {
-                Text = "Dni",
-                Left = 20,
-                Top = 100,
-                Width = 80
+                Text = "DNI:",
+                Location = new Point(20, 100),
+                Size = new Size(80, 20)
             };
-
 
             // Botones
             var btnGuardar = new Button
             {
                 Text = "Registrar No Socio",
-                Left = 120,
-                Top = 140,
-                Width = 150
+                Location = new Point(120, 140),
+                Size = new Size(150, 30)
             };
 
             var btnListar = new Button
             {
                 Text = "Listar No Socios",
-                Left = 120,
-                Top = 180,
-                Width = 150
+                Location = new Point(280, 140),
+                Size = new Size(150, 30)
+            };
+
+            var btnSalir = new Button
+            {
+                Text = "Salir",
+                Location = new Point(440, 140),
+                Size = new Size(80, 30),
+                BackColor = Color.LightGray
             };
 
             // Configuración de eventos
             btnGuardar.Click += BtnGuardar_Click;
             btnListar.Click += BtnListar_Click;
+            btnSalir.Click += (sender, e) => this.Close();
 
             // Agregar controles al formulario
             this.Controls.AddRange(new Control[]
             {
                 lblNombre, txtNombre,
                 lblApellido, txtApellido,
-                lblDni , txtDni,
-                btnGuardar, btnListar,
-                listBox
+                lblDni, txtDni,
+                btnGuardar, btnListar, btnSalir,
+                dataGridView
             });
         }
 
+        private void ConfigurarColumnasDataGrid()
+        {
+            dataGridView.Columns.Clear();
 
+            // Configuración de columnas
+            dataGridView.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Id",
+                HeaderText = "ID",
+                Width = 50
+            });
 
+            dataGridView.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Nombre",
+                HeaderText = "Nombre",
+                Width = 150
+            });
+
+            dataGridView.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Apellido",
+                HeaderText = "Apellido",
+                Width = 150
+            });
+
+            dataGridView.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Dni",
+                HeaderText = "DNI",
+                Width = 100
+            });
+
+            dataGridView.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "FechaRegistro",
+                HeaderText = "Fecha Registro",
+                Width = 120
+            });
+        }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
@@ -136,7 +183,6 @@ namespace ClubMinimal.Views.Forms
                     return;
                 }
 
-
                 // Registrar con todos los datos
                 _noSocioService.RegistrarNoSocio(txtNombre.Text, txtApellido.Text, txtDni.Text);
 
@@ -151,7 +197,7 @@ namespace ClubMinimal.Views.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("Error al registrar:{0}", ex.Message),
+                MessageBox.Show(string.Format("Error al registrar: {0}", ex.Message),
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -160,22 +206,22 @@ namespace ClubMinimal.Views.Forms
         {
             try
             {
-                listBox.Items.Clear();
+                dataGridView.Rows.Clear();
                 var noSocios = _noSocioService.ObtenerNoSocios();
-
-                // Encabezado
-                listBox.Items.Add("ID\tNombre\t\tApellido\tFecha Registro");
-                listBox.Items.Add(new string('-', 70));
 
                 foreach (var ns in noSocios)
                 {
-                    listBox.Items.Add(
-                        string.Format("{0}\t{1}\t\t{2}\t{3}",
+                    dataGridView.Rows.Add(
                         ns.Id,
-                        ns.Nombre.PadRight(10).Substring(0, 10),
-                        ns.Apellido.PadRight(10).Substring(0, 10),
-                        ns.FechaRegistro.ToShortDateString()));
+                        ns.Nombre,
+                        ns.Apellido,
+                        ns.Dni,
+                        ns.FechaRegistro.ToShortDateString()
+                    );
                 }
+
+                // Mostrar conteo de registros
+                this.Text = string.Format("Gestión de No Socios - Mostrando {0} registros", dataGridView.Rows.Count);
             }
             catch (Exception ex)
             {
@@ -185,4 +231,3 @@ namespace ClubMinimal.Views.Forms
         }
     }
 }
-

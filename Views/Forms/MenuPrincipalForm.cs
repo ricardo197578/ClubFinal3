@@ -56,14 +56,14 @@ namespace ClubMinimal.Views.Forms
             this.MaximizeBox = false;
 
             // Configuración de controles 
-            var btnSocios = CreateButton("Gestión de Socios", 30);
-            var btnCarnetSocio = CreateButton("Gestión de Carnet", 70);
+            var btnSocios = CreateButton("Registro de Socios", 30);
+            var btnCarnetSocio = CreateButton("Entrega Carnet Socios", 70);
             var btnPagoCuota = CreateButton("Pago de Cuota Social", 110);
-            var btnNoSocios = CreateButton("Gestión de No Socios", 150);
-            var btnGestionActividades = CreateButton("Gestión de Actividades", 190);          
-            var btnPagoActividades = CreateButton("Pago de Actividades", 230);
-            var btnGestionCuotas = CreateButton("Gestión de Cuotas", 270);
-
+            var btnGestionCuotas = CreateButton("Vencimiento Cuotas Socios", 150);
+            var btnNoSocios = CreateButton("Registro de No Socios", 190);
+            var btnGestionActividades = CreateButton("Gestión de Actividades", 230);          
+            var btnPagoActividades = CreateButton("Pago Actividades No Socio", 270);
+            
 
 
 

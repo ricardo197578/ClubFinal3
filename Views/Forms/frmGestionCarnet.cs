@@ -30,8 +30,31 @@ namespace ClubMinimal.Views.Forms
             txtDniSocio.Clear();
             btnBuscarPorDni.Click += btnBuscarPorDni_Click;
             HabilitarControlesCarnet(false);
+
+            // Limpiar
+            btnCancelar.Text = "Limpiar";
+            
+            // Salir 
+           var btnSalir = new Button
+            {
+                Text = "Salir",
+                Size = btnCancelar.Size
+            };
+
+            // centrar los botones
+            int espacioEntreBotones = 10;
+            int anchoTotalBotones = btnCancelar.Width + btnSalir.Width + espacioEntreBotones;
+            int posicionX = (this.ClientSize.Width - anchoTotalBotones) / 2;
+
+            // Posicionar botones
+            btnCancelar.Location = new System.Drawing.Point(posicionX, btnCancelar.Location.Y);
+            btnSalir.Location = new System.Drawing.Point(posicionX + btnCancelar.Width + espacioEntreBotones, btnCancelar.Location.Y);
+
+            btnSalir.Click += (sender, e) => this.Close();
+            this.Controls.Add(btnSalir);
         }
 
+       
         private void HabilitarControlesCarnet(bool habilitar)
         {
             chkAptoFisico.Enabled = habilitar;

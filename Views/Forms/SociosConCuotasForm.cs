@@ -4,17 +4,17 @@ using ClubMinimal.Services;
 using System.Collections.Generic;
 using ClubMinimal.Models;
 using ClubMinimal.Interfaces;
+using System.Drawing;
 
 namespace ClubMinimal.Views.Forms
 {
     public class SociosConCuotasForm : Form
     {
-        //private readonly CuotaService _cuotaService;
         private readonly ICuotaService _cuotaService;
-        private ListBox listBoxSocios;
+        private DataGridView dataGridViewSocios;
         private Button btnFiltrarVencidos;
         private Button btnFiltrarTodos;
-        private Button btnVerDetalle;
+        private Button btnVolver;
         private DateTimePicker dtpFechaConsulta;
 
         public SociosConCuotasForm(ICuotaService cuotaService)
@@ -26,73 +26,115 @@ namespace ClubMinimal.Views.Forms
         private void InitializeComponents()
         {
             this.Text = "Socios con Cuotas";
-            this.Width = 700;
+            this.Width = 800;  
             this.Height = 500;
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+
+            // Configuración del DataGridView
+            dataGridViewSocios = new DataGridView();
+            dataGridViewSocios.Location = new Point(20, 60);
+            dataGridViewSocios.Size = new Size(740, 380);
+            dataGridViewSocios.Font = new Font("Microsoft Sans Serif", 9);
+            dataGridViewSocios.ReadOnly = true;
+            dataGridViewSocios.AllowUserToAddRows = false;
+            dataGridViewSocios.AllowUserToDeleteRows = false;
+            dataGridViewSocios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewSocios.RowHeadersVisible = false;
+            dataGridViewSocios.ScrollBars = ScrollBars.Vertical;
+            dataGridViewSocios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Configurar columnas
+            ConfigurarColumnasDataGrid();
 
             // Controles
-            dtpFechaConsulta = new DateTimePicker
-            {
-                Format = DateTimePickerFormat.Short,
-                Left = 20,
-                Top = 20,
-                Width = 150,
-                Value = DateTime.Today
-            };
+            dtpFechaConsulta = new DateTimePicker();
+            dtpFechaConsulta.Format = DateTimePickerFormat.Short;
+            dtpFechaConsulta.Location = new Point(20, 20);
+            dtpFechaConsulta.Size = new Size(150, 20);
+            dtpFechaConsulta.Value = DateTime.Today;
 
-            btnFiltrarVencidos = new Button
-            {
-                Text = "Filtrar Vencidos",
-                Left = 180,
-                Top = 20,
-                Width = 120
-            };
+            btnFiltrarVencidos = new Button();
+            btnFiltrarVencidos.Text = "Filtrar Vencidos";
+            btnFiltrarVencidos.Location = new Point(180, 20);
+            btnFiltrarVencidos.Size = new Size(120, 30);
 
-            btnFiltrarTodos = new Button
-            {
-                Text = "Mostrar Todos",
-                Left = 310,
-                Top = 20,
-                Width = 120
-            };
+            btnFiltrarTodos = new Button();
+            btnFiltrarTodos.Text = "Mostrar Todos";
+            btnFiltrarTodos.Location = new Point(310, 20);
+            btnFiltrarTodos.Size = new Size(120, 30);
 
-            btnVerDetalle = new Button
-            {
-                Text = "Ver Detalle",
-                Left = 440,
-                Top = 20,
-                Width = 120,
-                Enabled = false
-            };
-
-            listBoxSocios = new ListBox
-            {
-                Left = 20,
-                Top = 60,
-                Width = 650,
-                Height = 380
-            };
+            btnVolver = new Button();
+            btnVolver.Text = "Volver";
+            btnVolver.Location = new Point(680, 20);
+            btnVolver.Size = new Size(80, 30);
+            btnVolver.BackColor = Color.LightGray;
 
             // Eventos
-            btnFiltrarVencidos.Click += (s, e) => FiltrarSocios(true);
-            btnFiltrarTodos.Click += (s, e) => FiltrarSocios(false);
-            btnVerDetalle.Click += BtnVerDetalle_Click;
-            listBoxSocios.SelectedIndexChanged += (s, e) => 
-                btnVerDetalle.Enabled = listBoxSocios.SelectedIndex != -1;
+            btnFiltrarVencidos.Click += new EventHandler((s, e) => FiltrarSocios(true));
+            btnFiltrarTodos.Click += new EventHandler((s, e) => FiltrarSocios(false));
+            btnVolver.Click += new EventHandler((s, e) => this.Close());
 
             // Agregar controles
             this.Controls.AddRange(new Control[] {
                 dtpFechaConsulta,
                 btnFiltrarVencidos,
                 btnFiltrarTodos,
-                btnVerDetalle,
-                listBoxSocios
+                btnVolver,
+                dataGridViewSocios
             });
+        }
+
+        private void ConfigurarColumnasDataGrid()
+        {
+            dataGridViewSocios.Columns.Clear();
+
+            dataGridViewSocios.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Apellido",
+                HeaderText = "Apellido",
+                DataPropertyName = "Apellido"
+            });
+
+            dataGridViewSocios.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Nombre",
+                HeaderText = "Nombre",
+                DataPropertyName = "Nombre"
+            });
+
+            dataGridViewSocios.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "DNI",
+                HeaderText = "DNI",
+                DataPropertyName = "Dni"
+            });
+
+            dataGridViewSocios.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Vencimiento",
+                HeaderText = "Vencimiento Cuota",
+                DataPropertyName = "FechaVencimientoCuota"
+            });
+
+            dataGridViewSocios.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "Estado",
+                HeaderText = "Estado",
+                DataPropertyName = "EstadoActivo"
+            });
+
+            // Formato para columna de vencimiento
+            dataGridViewSocios.Columns["Vencimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            
+            // Formato para columna de estado
+            dataGridViewSocios.Columns["Estado"].ValueType = typeof(string);
         }
 
         private void FiltrarSocios(bool soloVencidos)
         {
-            listBoxSocios.Items.Clear();
+            dataGridViewSocios.Rows.Clear();
             IEnumerable<Socio> socios;
 
             if (soloVencidos)
@@ -105,27 +147,24 @@ namespace ClubMinimal.Views.Forms
             }
 
             foreach (var socio in socios)
-{
-    string item = string.Format("{0}, {1} - DNI: {2} - Vencimiento: {3:dd/MM/yyyy} - Estado: {4}",
-        socio.Apellido,
-        socio.Nombre,
-        socio.Dni,
-        socio.FechaVencimientoCuota,
-        socio.EstadoActivo ? "Activo" : "Inactivo");
-
-    listBoxSocios.Items.Add(item);
-}
-
-        }
-        //completar
-        private void BtnVerDetalle_Click(object sender, EventArgs e)
-        {
-            if (listBoxSocios.SelectedItem != null)
             {
-                
-                MessageBox.Show("Detalle del socio seleccionado", "Detalle", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int rowIndex = dataGridViewSocios.Rows.Add(
+                    socio.Apellido,
+                    socio.Nombre,
+                    socio.Dni,
+                    socio.FechaVencimientoCuota,
+                    socio.EstadoActivo ? "Activo" : "Inactivo"
+                );
+
+                // Resaltar filas vencidas
+                if (soloVencidos)
+                {
+                    dataGridViewSocios.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightPink;
+                }
             }
+
+            // Mostrar conteo de registros
+            this.Text = string.Format("Socios con Cuotas - Mostrando {0} registros", dataGridViewSocios.Rows.Count);
         }
     }
 }
